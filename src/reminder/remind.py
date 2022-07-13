@@ -17,7 +17,7 @@ class RemindCog(commands.Cog):
             print(f"{message.author}: Is a bot")
             return
         if self.allowed_channels is not None:
-            if message.channnel.id not in self.allowed_channels:
+            if message.channel.id not in self.allowed_channels:
                 print(f"{message.author}: Is not in the allowed channels")
                 return
         author = await message.guild.fetch_member(message.author.id)
