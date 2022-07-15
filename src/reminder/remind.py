@@ -36,8 +36,8 @@ class RemindCog(commands.Cog):
             print(f"[roles] [rejected] {message.author}: Has posted", flush=True)
             return
 
-        message = await message.channel.send(f"{message.author.mention} {self.reminder_text}")
         print(f"[roles] [sent] {message.author}", flush=True)
+        message = await message.channel.send(f"{message.author.mention} {self.reminder_text}")
         await sleep(10)
         await message.delete()
 
