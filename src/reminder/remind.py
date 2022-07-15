@@ -14,30 +14,30 @@ class RemindCog(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.author.bot:
-            print(f"{message.author}: Is a bot")
+            print(f"[roles] [rejected] {message.author}: Is a bot", flush=True)
             return
         if self.allowed_channels is not None:
             if message.channel.id not in self.allowed_channels:
-                print(f"{message.author}: Is not in the allowed channels")
+                print(f"[roles] [rejected] {message.author}: Is not in the allowed channels", flush=True)
                 return
         author = await message.guild.fetch_member(message.author.id)
         if isinstance(author, discord.User):
-            print(f"{message.author}: Wasn't able to retrieve member info")
+            print(f"[roles] [rejected] {message.author}: Wasn't able to retrieve member info", flush=True)
             return
         if len(author.roles) > 1:
-            print(f"{message.author}: Has roles")
+            print(f"[roles] [rejected] {message.author}: Has roles", flush=True)
             return
         if author.joined_at < message.created_at - datetime.timedelta(minutes=30):
-            print(f"{message.author}: Joined too long ago")
+            print(f"[roles] [rejected] {message.author}: Joined too long ago", flush=True)
             return
 
         has_posted = await self.has_posted(message.author.id, message.guild.id, author.joined_at)
         if has_posted:
-            print(f"{message.author}: Has posted")
+            print(f"[roles] [rejected] {message.author}: Has posted", flush=True)
             return
 
         message = await message.channel.send(f"{message.author.mention} {self.reminder_text}")
-        print(f"{message.author}: Sent reminder")
+        print(f"[roles] [sent] {message.author}", flush=True)
         await sleep(10)
         await message.delete()
 
